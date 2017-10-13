@@ -1,39 +1,42 @@
 <template>
 <v-layout column>
   <v-flex xs6 offset-xs3>
-    <div class="white elevation-2">
-      <v-toolbar flat dense class="cyan" dark>
-        <v-toolbar-title>Register</v-toolbar-title>
-      </v-toolbar>
-      <div class="pl-4 pr-4 pt-2 pb-2">
-        <input
-        type="email"
+    <panel title="Register">
+      <form
+        name="tracker-form"
+        autocomplete="off"
+      >
+        <v-text-field
         name="email"
+        label="email"
         v-model="email"
-        placeholder="email" />
+        ></v-text-field>
         <br>
-        <input
-        type="password"
+        <v-text-field
         name="password"
+        label="password"
+        type="password"
         v-model="password"
-        placeholder="password" />
+        autocomplete="new-password"
+        ></v-text-field>
+        </form>
         <br>
         <div class="error" v-html="error" />
         <br>
-        <v-btn class="cyan" @click="register">Register</v-btn>
-      </div>
-    </div>
+        <v-btn class="amber lighten-1" @click="register" dark>Register</v-btn>
+    </panel>
   </v-flex>
 </v-layout>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import Panel from '@/components/Panel'
 export default {
   data () {
     return {
-      email: 'abc',
-      password: '123',
+      email: '',
+      password: '',
       error: null
     }
   },
@@ -43,21 +46,26 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.email = 'hello world'
-    }, 2000)
+    // setTimeout(() => {
+    //   this.email = 'hello world'
+    // }, 2000)
   },
   methods: {
     async register () {
       try {
-        await AuthenticationService.register({
+        const response = await AuthenticationService.register({
           email: this.email,
           password: this.password
         })
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
       } catch (error) {
         this.error = error.response.data.error
       }
     }
+  },
+  components: {
+    Panel
   }
 }
 </script>
