@@ -1,5 +1,5 @@
 <template>
-<div class="white elevation-2">
+  <div class="white elevation-2">
       <v-toolbar flat dense class="amber lighten-1" dark>
         <v-toolbar-title>{{title}}</v-toolbar-title>
           <slot name="action" />
@@ -9,7 +9,7 @@
           No slot content defined.
         </slot>
       </div>
-    </div>
+  </div>
 </template>
 
 <script>

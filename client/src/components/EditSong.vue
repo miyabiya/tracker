@@ -61,13 +61,14 @@
       <div class="danger-alert" v-if="error">
         {{error}}
       </div>
-      <v-btn class="amber lighten-1" @click="create" dark>Create a song</v-btn>
+      <v-btn class="amber lighten-1" @click="save" dark>Save Song</v-btn>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import SongService from '@/services/SongsService'
+import SongsService from '@/services/SongsService'
+
 export default {
   data () {
     return {
@@ -85,8 +86,17 @@ export default {
       required: (value) => !!value || '必須'
     }
   },
+  async mounted () {
+    try {
+      const songId = this.$store.state.route.params.songId
+      this.song = (await SongsService.show(songId)).data
+      console.log(this.song)
+    } catch (err) {
+      console.log(err)
+    }
+  },
   methods: {
-    async create () {
+    async save () {
       this.error = null
       const allFieldsIn = Object
       .keys(this.song)
@@ -95,10 +105,16 @@ export default {
         this.error = '全てのフィールドに入力してください'
         return
       }
+      const songId = this.$store.state.route.params.songId
+      console.log('req songId:', songId)
       try {
-        await SongService.post(this.song)
+        const song = await SongsService.put(this.song)
+        console.log('client song:', song)
         this.$router.push({
-          name: 'songs'
+          name: 'song',
+          params: {
+            songId: songId
+          }
         })
       } catch (err) {
         console.log(err)
