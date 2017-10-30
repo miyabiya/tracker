@@ -72,7 +72,6 @@ export default {
 <style scoped>
 .song {
   padding:20px;
-  height: 330px;
 }
 .song-title {
   font-size: 30px;

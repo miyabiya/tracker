@@ -25,7 +25,7 @@ module.exports = {
             res.send(songs)
         } catch (err) {
             res.status(500).send({
-                error: 'an error has occured trying to fetch the songs.'
+                error: '曲データのフェッチに失敗しました'
             })
         }
     },
@@ -35,13 +35,13 @@ module.exports = {
             res.send(song)
         } catch (err) {
             res.status(500).send({
-                error: 'an error has occured trying to create the songs.'
+                error: '曲データの投稿に失敗しました'
             })
         }
     },
     async put (req, res) {
         try {
-            const song = await Song.update(req.body, {
+            await Song.update(req.body, {
                 where: {
                     id: req.body.id
                 }
@@ -49,7 +49,7 @@ module.exports = {
             res.send(req.body)
         } catch (err) {
             res.status(500).send({
-                error: 'an error has occured trying to update the song.'
+                error: '曲データ更新に失敗しました'
             })
         }
     },
@@ -59,7 +59,7 @@ module.exports = {
             res.send(song)
         } catch (err) {
             res.status(500).send({
-                error: 'an error has occured trying to fetch the songs.'
+                error: '曲データのフェッチに失敗しました'
             })
         }
     }

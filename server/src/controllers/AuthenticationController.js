@@ -37,7 +37,6 @@ module.exports = {
                     email: email
                 }
             })
-            console.log("emailだよ")
             if (!user) {
                 return res.status(403).send({
                     error: 'The login info was incorrect'
@@ -51,7 +50,6 @@ module.exports = {
                     error: 'The login info was incorrect'
                 })
             }
-            console.log("passwordFlag true")
             const userJson = user.toJSON()
             res.send({
                 user: userJson,

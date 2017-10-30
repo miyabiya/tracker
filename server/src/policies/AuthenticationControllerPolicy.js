@@ -15,22 +15,22 @@ module.exports = {
             switch (error.details[0].context.key) {
                 case 'email':
                     res.status(400).send({
-                    error: 'you must change a valid email!'
+                    error: '正しいメールアドレスを入力してください'
                     })
                     break
                 case 'password':
                     res.status(400).send({
-                        error: `The password failed to match the following rules:
+                        error: `パスワードが正しくありません。以下の条件が考えられます
                                 <br>
-                                1.it must contain the following characters: lower case, upper case,numerics
+                                1.大文字または小文字の英字と数字が含まれていない
                                 <br>
-                                2.it must be at least 8 characters in length and not greater than 32 characters in length
+                                2.8文字～32文字ではない
                             `
                     })
                     break
                 default:
                     res.status(400).send({
-                        error: 'Invalid registration information'
+                        error: '登録に失敗しました'
                     })
             }
         } else {
